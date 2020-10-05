@@ -33,7 +33,8 @@ app.post("/users", (req, res) => {
         if (err) {
             throw err;
         }
-        data = JSON.parse(data).concat(req.body)
+        let dateFile = JSON.parse(data)
+         data = dateFile.concat({ ...req.body, customerID: dateFile.length + 1 })
         fs.writeFile('./users.json', JSON.stringify(data), "utf8", (err) => {
             if (err) {
                 throw err;

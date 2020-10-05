@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import { addUser, editUser } from '../../store/actions'
 import { Button, Modal, Form } from 'react-bootstrap'
@@ -11,15 +11,7 @@ import { FaPen } from 'react-icons/fa'
 
 const UserForm = (props) => {
     const genders = { 'm': 'Male', 'w': 'Female' }
-
-    const [show, setShow] = useState(false);
-    const [user, setUser] = useState(props.data)
-
-
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+    let user = props.data || {}
 
 
     const handleSumbit = () => {
@@ -34,27 +26,28 @@ const UserForm = (props) => {
             default:
                 break;
         }
-        setShow(false)
+        props.onClose()
     }
     const handelFirstname = (e) => {
-        setUser({ ...user, "name": { ...user.name, 'first': e.target.value } })
+        user = { ...user, "name": { ...user.name, 'first': e.target.value } }
 
     }
     const handleLastname = (e) => {
-        setUser({ ...user, "name": { ...user.name, 'last': e.target.value } })
+        user = { ...user, "name": { ...user.name, 'last': e.target.value } }
 
     }
     const handleChangeGender = (e) => {
-        setUser({ ...user, 'gender': e.target.value })
+        user = { ...user, 'gender': e.target.value }
     }
-    const handleBirthday = (date) => {
-        console.log('birth', date)
-        setUser({ ...user, 'birthday': date })
+
+    const handleBirthday = (moment) => {
+        console.log('birth', moment.format('YYYY-MM-D'))
+        user = { ...user, 'birthday': moment.format('YYYY-MM-D') }
     }
     return (
         <>
-            <FaPen onClick={handleShow} />
-            <Modal show={show} onHide={handleClose} animation={false}>
+            {/* <FaPen onClick={handleShow} /> */}
+            <Modal show={props.show} onHide={props.onClose} animation={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit user</Modal.Title>
                 </Modal.Header>
@@ -65,7 +58,7 @@ const UserForm = (props) => {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter first name"
-                                value={user.name.first}
+                                defaultValue={user.name ? user.name.first : ""}
                                 onChange={e => handelFirstname(e)} />
                         </Form.Group>
                         <Form.Group controlId="formName">
@@ -73,25 +66,26 @@ const UserForm = (props) => {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter last name"
-                                value={user.name.last}
+                                defaultValue={user.name ? user.name.last : ""}
                                 onChange={e => handleLastname(e)} />
                         </Form.Group>
                         <Form.Group controlId="formBirthday">
                             <Form.Label>Birthday</Form.Label>
                             <Calender
                                 date={user.birthday}
-                                Change={handleBirthday} />
+                                change={handleBirthday} />
                         </Form.Group>
                         <Form.Group controlId="formGender">
                             <Select
                                 title="Genders"
                                 data={genders}
+                                initialValue={user.gender || ""}
                                 change={e => handleChangeGender(e)} />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button variant="secondary" onClick={props.onClose}>
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleSumbit}>
