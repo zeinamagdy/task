@@ -1,7 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
 import Home from './containers/home/home'
-
 import './App.scss';
 
 function App() {

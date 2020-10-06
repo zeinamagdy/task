@@ -55,17 +55,6 @@
         "customerLifetimeValue": 213.12
     },
     {
-        "customerID": 6,
-        "name": {
-            "first": "Rox6",
-            "last": "Fox"
-        },
-        "birthday": "1979-06-30",
-        "gender": "w",
-        "lastContact": "2017-01-29T21:08:50.700Z",
-        "customerLifetimeValue": 213.12
-    },
-    {
         "customerID": 7,
         "name": {
             "first": "Rox7",

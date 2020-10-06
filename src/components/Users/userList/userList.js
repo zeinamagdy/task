@@ -3,14 +3,8 @@ import { connect } from 'react-redux'
 import { fetchUsers, deleteUser } from '../../../store/actions'
 import User from '../user/user'
 import Snackbar from '../../UI/snackbar/snackbar'
-import UserForm from '../../userForm/userForm'
-import Fab from '@material-ui/core/Fab'
-import AddIcon from '@material-ui/icons/Add'
+import UserForm from '../userForm/userForm'
 import Pagination from '@material-ui/lab/Pagination'
-import { FaPen } from 'react-icons/fa'
-
-
-
 import * as classes from './userList.module.scss'
 
 const UserList = (props) => {
@@ -32,7 +26,6 @@ const UserList = (props) => {
         setShowForm(false)
     }
     const handleChangePage = (event, newPage) => {
-        console.log('newPage', newPage);
         setPage(newPage);
     };
 
@@ -49,24 +42,18 @@ const UserList = (props) => {
                             handleDeleteUser={(id) => props.deleteUser(user.customerID)}
                             user={user}
                         />)}
-
                 <Pagination
                     count={Math.ceil(props.users.length / rowsPerPage)}
                     page={page}
                     onChange={handleChangePage}
                     variant="outlined"
-                    color="primary" />
-                <div className={classes.userList__add}>
-                    <Fab color="primary" aria-label="add" onClick={() => setShowForm(true)}>
-                        <AddIcon />
-                    </Fab>
-                </div>
-
+                    color="primary"
+                />
             </div>
 
             {Object.keys(message).length !== 0 ?
                 <Snackbar message={message} onClosed={handleCloseSnackbar} /> : null}
-            {showForm ? <UserForm mode='edit' onClose={handleClose} show={showForm} /> : null}
+            {showForm ? <UserForm mode='add' onClose={handleClose} show={showForm} /> : null}
 
         </>
 

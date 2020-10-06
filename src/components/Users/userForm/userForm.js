@@ -1,13 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addUser, editUser } from '../../store/actions'
+import { addUser, editUser } from '../../../store/actions'
 import { Button, Modal, Form } from 'react-bootstrap'
-import Calender from '../UI/calender/calender'
-// import Calender from '../UI/calenderUi/calenderUi'
-import Select from '../UI/select/select'
-import { FaPen } from 'react-icons/fa'
+import Calendar from '../../UI/calendar/calendar'
+import Select from '../../UI/select/select'
 
-// https://www.telerik.com/blogs/how-to-build-forms-with-react-the-easy-way
 
 const UserForm = (props) => {
     const genders = { 'm': 'Male', 'w': 'Female' }
@@ -41,12 +38,13 @@ const UserForm = (props) => {
     }
 
     const handleBirthday = (moment) => {
-        console.log('birth', moment.format('YYYY-MM-D'))
-        user = { ...user, 'birthday': moment.format('YYYY-MM-D') }
+        user = { ...user, 'birthday': moment.format('YYYY-MM-DD') }
+    }
+    const handleLastContact = (moment) => {
+        user = { ...user, 'lastContact': moment.toJSON() }
     }
     return (
         <>
-            {/* <FaPen onClick={handleShow} /> */}
             <Modal show={props.show} onHide={props.onClose} animation={false}>
                 <Modal.Header closeButton>
                     <Modal.Title>Edit user</Modal.Title>
@@ -71,9 +69,21 @@ const UserForm = (props) => {
                         </Form.Group>
                         <Form.Group controlId="formBirthday">
                             <Form.Label>Birthday</Form.Label>
-                            <Calender
+                            <Calendar
                                 date={user.birthday}
-                                change={handleBirthday} />
+                                timeFormat={false}
+                                placeholder="Birthday"
+                                change={handleBirthday}
+                            />
+                        </Form.Group>
+                        <Form.Group controlId="formBirthday">
+                            <Form.Label>Last contact</Form.Label>
+                            <Calendar
+                                date={user.lastContact}
+                                timeFormat={true}
+                                placeholder="Last contact"
+                                change={handleLastContact}
+                            />
                         </Form.Group>
                         <Form.Group controlId="formGender">
                             <Select

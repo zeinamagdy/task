@@ -2,20 +2,43 @@
     background-color: white;
     padding: 1.5rem;
     display: grid;
-    grid-template-columns: repeat(5, min-content);
+    grid-template-columns: repeat(3, 1fr) 5rem 5rem;
     grid-gap: 3rem;
+    align-items: center;
     border-radius: 0.5rem;
     border-left: 0.4rem solid #1a5d98;
     box-shadow: 0 2rem 5rem rgba(0, 0, 0, 0.06);
     &__icons {
-        // ToDo: avoid display flex and solve with grid content or items
         display: flex;
         cursor: pointer;
+        justify-content: space-evenly;
     }
     &__lastContact {
         display: flex;
+        align-items: center;
     }
     &__birthday {
         display: flex;
+        align-items: center;
+    }
+}
+
+@media only screen and (max-width: 950px) {
+    .user {
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 1rem;
+    }
+}
+
+@media only screen and (max-width: 700px) {
+    .user {
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 1rem;
+    }
+}
+@media only screen and (max-width: 480px) {
+    .user {
+        grid-template-columns: 1fr;
+        grid-gap: 1rem;
     }
 }
