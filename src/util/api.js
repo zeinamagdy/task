@@ -1,7 +1,11 @@
 import axios from 'axios'
 
-const url = '';
-
+let url;
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+    url ='http://localhost:3000'
+} else {
+    url = ''
+}
 
 export const getUsers = () => {
     return axios.get(url + '/users')

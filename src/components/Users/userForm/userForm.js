@@ -58,6 +58,7 @@ const UserForm = (props) => {
         }
     }
     const handleLastContact = (moment) => {
+        console.log('moment', moment)
         user = {
             ...user,
             'lastContact': moment instanceof Moment ? moment.toJSON() : ''
@@ -115,8 +116,8 @@ const UserForm = (props) => {
                         <Form.Group controlId="formBirthday">
                             <Form.Label>Last contact</Form.Label>
                             <Calendar
-                                date={user.lastContact ?
-                                    Moment(user.lastContact).format('YYYY-MM-DD HH:mm:ss A') : ''}
+                                date={user.lastContact !== '' ?
+                                    Moment(user.lastContact).format('YYYY-MM-DD HH:mm:ss A') : null}
                                 placeholder="Last contact"
                                 change={handleLastContact}
                             />

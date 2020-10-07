@@ -25,7 +25,6 @@ const Home = () => {
             </div>
             {showForm ? <UserForm mode='add' onClose={handleClose} show={showForm} /> : null}
         </div>
-
     )
 }
 

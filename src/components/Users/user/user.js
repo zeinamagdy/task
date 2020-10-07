@@ -22,7 +22,7 @@ const User = props => {
             </div>
             <div className={classes.user__lastContact}>
                 <CalendarIcon />
-                {props.user.lastContact !== '' ?
+                {props.user.lastContact ?
                     Moment(props.user.lastContact).format('YYYY-MM-DD HH:mm:ss A') :
                     'No time Contact provided'}
             </div>
