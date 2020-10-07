@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = 'http://localhost:3002';
+const url = '';
 
 
 export const getUsers = () => {

@@ -6,7 +6,7 @@ import Datetime from 'react-datetime'
 
 const Calendar = (props) => {
     return <Datetime
-        value={props.date}
+        initialValue={props.date}
         inputProps={{ placeholder: props.placeholder }}
         timeFormat={props.timeFormat}
         onChange={props.change}
