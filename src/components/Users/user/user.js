@@ -18,13 +18,16 @@ const User = props => {
         <div key={props.user.customerID} className={classes.user}>
             <div>{props.user.name.first}&nbsp;{props.user.name.last}</div>
             <div className={classes.user__birthday}>
-                <CakeIcon />{props.user.birthday}
+                <CakeIcon />{props.user.birthday ? props.user.birthday : 'No birthday provided'}
             </div>
             <div className={classes.user__lastContact}>
-                <CalendarIcon /> {Moment(props.user.lastContact).format('YYYY-MM-DD HH:mm:ss A')}
+                <CalendarIcon />
+                {props.user.lastContact !== '' ?
+                    Moment(props.user.lastContact).format('YYYY-MM-DD HH:mm:ss A') :
+                    'No time Contact provided'}
             </div>
             <div>
-                {props.user.customerLifetimeValue}
+                {props.user.customerLifetimeValue ? props.user.customerLifetimeValue : 0}
             </div>
             <div className={classes.user__icons}>
                 <Tooltip title="Delete">

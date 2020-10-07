@@ -36,13 +36,13 @@ const UserList = (props) => {
                     handleDeleteUser={(id) => props.deleteUser(user.customerID)}
                     user={user}
                 />)}
-            <Pagination
+            <div className={classes.userList__paging}> <Pagination
                 count={Math.ceil(props.users.length / rowsPerPage)}
                 page={page}
                 onChange={handleChangePage}
                 variant="outlined"
                 color="primary"
-            />
+            /></div>
         </div> : <div>No users</div>
 
     return (
