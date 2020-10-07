@@ -1,14 +1,12 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app)
-
-**The frontend part** is created with React, Redux, Bootstap, scss and UI Material.
-**The backend part** is a nodejs server connecting to a mongodb.
+-**The frontend part** is created with React, Redux, Bootstap, scss and UI Material.
+-**The backend part** is a nodejs server connecting to a mongodb.
 
 # setup
 npm install
 
 # run
-npm run build
-npm start
+- npm run build
+- npm start
 
 # description
 - The main container "Home" compoenent contains Header and userList.
