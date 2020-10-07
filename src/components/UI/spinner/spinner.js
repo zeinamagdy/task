@@ -5,7 +5,6 @@ const Spinner = (props) => {
     return (
         <div className={classes.loader}></div>
     )
-
 }
 
 export default Spinner;

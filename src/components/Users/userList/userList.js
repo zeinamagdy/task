@@ -19,15 +19,12 @@ const UserList = (props) => {
     useEffect(() => {
         getUsers()
     }, [getUsers])
-
-    // console.log("calling api", props.users)
     const handleClose = () => {
         setShowForm(false)
     }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
-    };
-    console.log('users', props.users)
+    }
     let users = props.users.length > 0 ?
         <div className={classes.userList}>
             {props.users.slice(startIdx, endIdx).map((user, index) =>
@@ -36,13 +33,14 @@ const UserList = (props) => {
                     handleDeleteUser={(id) => props.deleteUser(user.customerID)}
                     user={user}
                 />)}
-            <div className={classes.userList__paging}> <Pagination
-                count={Math.ceil(props.users.length / rowsPerPage)}
-                page={page}
-                onChange={handleChangePage}
-                variant="outlined"
-                color="primary"
-            /></div>
+            <div className={classes.userList__paging}>
+                <Pagination
+                    count={Math.ceil(props.users.length / rowsPerPage)}
+                    page={page}
+                    onChange={handleChangePage}
+                    variant="outlined"
+                    color="primary"
+                /></div>
         </div> : <div>No users</div>
 
     return (

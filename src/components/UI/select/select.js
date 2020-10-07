@@ -1,7 +1,6 @@
 import React from 'react'
 import { Form } from 'react-bootstrap'
 
-// validation: https://react-bootstrap-v3.netlify.app/components/forms/
 const Select = (props) => {
     return (
         <Form.Group controlId="formSelect" >
@@ -12,8 +11,14 @@ const Select = (props) => {
                 onChange={props.change}
                 defaultValue={props.initialValue}
                 custom>
-                <option disabled={true}>Select Gender</option>
-                {Object.keys(props.data).map(el => <option key={el} value={el}>{props.data[el]}</option>)}
+                <option disabled={true} value="">
+                    Select gender
+                </option>
+                {Object.keys(props.data).map(el =>
+                    <option key={el} value={el}>
+                        {props.data[el]}
+                    </option>
+                )}
             </Form.Control>
         </Form.Group>)
 }

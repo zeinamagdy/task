@@ -3,8 +3,6 @@
     grid-gap: 0.6rem;
     grid-template-rows: [content-start]repeat(5, 1fr) [content-end paging-start] auto[paging-end];
     justify-items: center;
-
-    //TODO: need to be more specific selector
     & > * :focus {
         outline: 0;
     }

@@ -5,7 +5,6 @@ import { addUser, editUser } from '../../../store/actions'
 import { Button, Modal, Form } from 'react-bootstrap'
 import Calendar from '../../UI/calendar/calendar'
 import Select from '../../UI/select/select'
-import { updatedObject } from '../../../util/helper'
 import './userForm.scss'
 
 const UserForm = (props) => {
@@ -33,9 +32,6 @@ const UserForm = (props) => {
         }
         setValidated(true);
     };
-
-
-
     const handelFirstname = (e) => {
         user = {
             ...user,
@@ -47,7 +43,6 @@ const UserForm = (props) => {
             ...user,
             "name": { ...user.name, 'last': e.target.value }
         }
-
     }
     const handleChangeGender = (e) => {
         user = {
@@ -55,18 +50,17 @@ const UserForm = (props) => {
             'gender': e.target.value
         }
     }
-
     const handleBirthday = (moment) => {
-
+        console.log('moment', moment);
         user = {
             ...user,
-            'birthday': moment ? moment.format('YYYY-MM-DD') : ''
+            'birthday': moment instanceof Moment ? moment.format('YYYY-MM-DD') : ''
         }
     }
     const handleLastContact = (moment) => {
         user = {
             ...user,
-            'lastContact': moment ? moment.toJSON() : ''
+            'lastContact': moment instanceof Moment ? moment.toJSON() : ''
         }
     }
     const handleCustomerLifetime = (e) => {
@@ -74,7 +68,6 @@ const UserForm = (props) => {
             ...user,
             'customerLifetimeValue': e.target.value !== '' ? e.target.value : 0
         }
-
     }
     return (
         <>
@@ -153,9 +146,7 @@ const UserForm = (props) => {
                             </Button>
                     </Modal.Footer>
                 </Form>
-
             </Modal>
-
         </>
     );
 }
