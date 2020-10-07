@@ -4,12 +4,12 @@ import { addUser, editUser } from '../../../store/actions'
 import { Button, Modal, Form } from 'react-bootstrap'
 import Calendar from '../../UI/calendar/calendar'
 import Select from '../../UI/select/select'
+import Moment from 'moment'
 
 
 const UserForm = (props) => {
     const genders = { 'm': 'Male', 'w': 'Female' }
     let user = props.data || {}
-
 
     const handleSumbit = () => {
         console.log('sumbit user', user)
@@ -26,32 +26,56 @@ const UserForm = (props) => {
         props.onClose()
     }
     const handelFirstname = (e) => {
-        user = { ...user, "name": { ...user.name, 'first': e.target.value } }
+        user = {
+            ...user,
+            "name": { ...user.name, 'first': e.target.value }
+        }
 
     }
     const handleLastname = (e) => {
-        user = { ...user, "name": { ...user.name, 'last': e.target.value } }
+        user = {
+            ...user,
+            "name": { ...user.name, 'last': e.target.value }
+        }
 
     }
     const handleChangeGender = (e) => {
-        user = { ...user, 'gender': e.target.value }
+        user = {
+            ...user,
+            'gender': e.target.value
+        }
     }
 
     const handleBirthday = (moment) => {
-        user = { ...user, 'birthday': moment.format('YYYY-MM-DD') }
+        user = {
+            ...user,
+            'birthday': moment.format('YYYY-MM-DD')
+        }
     }
     const handleLastContact = (moment) => {
-        user = { ...user, 'lastContact': moment.toJSON() }
+        user = {
+            ...user,
+            'lastContact': moment.toJSON()
+        }
+    }
+    const handleCustomerLifetime = (e) => {
+        user = {
+            ...user,
+            'customerLifetimeValue': e.target.value
+        }
+
     }
     return (
         <>
             <Modal show={props.show} onHide={props.onClose} animation={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Edit user</Modal.Title>
+                    <Modal.Title>
+                        {props.mode === 'add' ? 'Add user' : 'Edit user'}
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                        <Form.Group controlId="formName" inline>
+                        <Form.Group controlId="formName">
                             <Form.Label>First name</Form.Label>
                             <Form.Control
                                 type="text"
@@ -79,11 +103,18 @@ const UserForm = (props) => {
                         <Form.Group controlId="formBirthday">
                             <Form.Label>Last contact</Form.Label>
                             <Calendar
-                                date={user.lastContact}
-                                timeFormat={true}
+                                date={Moment(user.lastContact).format('YYYY-MM-DD HH:mm:ss A')}
                                 placeholder="Last contact"
                                 change={handleLastContact}
                             />
+                        </Form.Group>
+                        <Form.Group controlId="formCustomerLifetime">
+                            <Form.Label>Customer lifetime</Form.Label>
+                            <Form.Control
+                                type="number"
+                                placeholder="Enter customer lifetime value"
+                                defaultValue={user.customerLifetimeValue || ""}
+                                onChange={e => handleCustomerLifetime(e)} />
                         </Form.Group>
                         <Form.Group controlId="formGender">
                             <Select
@@ -99,7 +130,7 @@ const UserForm = (props) => {
                         Close
                     </Button>
                     <Button variant="primary" onClick={handleSumbit}>
-                        Save Changes
+                        Save
                     </Button>
                 </Modal.Footer>
             </Modal>
@@ -108,15 +139,9 @@ const UserForm = (props) => {
 }
 const dispatchToProps = dispatch => {
     return {
-        addUser: () => dispatch(addUser()),
+        addUser: (user) => dispatch(addUser(user)),
         editUser: (user) => dispatch(editUser(user))
     }
 }
-const stateToProps = state => {
-    return {
-        users: state.users,
-        loading: state.loading
-    }
-}
 
-export default connect(stateToProps, dispatchToProps)(UserForm)
+export default connect(null, dispatchToProps)(UserForm)

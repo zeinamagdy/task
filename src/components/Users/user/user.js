@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
-import { FaTrash, FaBirthdayCake, FaPhone } from 'react-icons/fa'
 import UserForm from '../userForm/userForm'
-import Fab from '@material-ui/core/Fab'
-import Delete from '@material-ui/icons/Delete'
-import { FaPen } from 'react-icons/fa'
-
-
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit'
+import CakeIcon from '@material-ui/icons/Cake'
+import CalendarIcon from '@material-ui/icons/CalendarToday'
 import * as classes from './user.module.scss'
-import Moment from 'moment';
+import Moment from 'moment'
 
 const User = props => {
     const [showForm, setShowForm] = useState(false)
@@ -18,21 +18,36 @@ const User = props => {
         <div key={props.user.customerID} className={classes.user}>
             <div>{props.user.name.first}&nbsp;{props.user.name.last}</div>
             <div className={classes.user__birthday}>
-                <FaBirthdayCake />{props.user.birthday}
+                <CakeIcon />{props.user.birthday}
             </div>
             <div className={classes.user__lastContact}>
-                <FaPhone /> {Moment(props.user.lastContact).format('YYYY-MM-DD HH:mm:ss')}
+                <CalendarIcon /> {Moment(props.user.lastContact).format('YYYY-MM-DD HH:mm:ss A')}
             </div>
             <div>
                 {props.user.customerLifetimeValue}
             </div>
             <div className={classes.user__icons}>
-                <FaTrash onClick={props.handleDeleteUser} />
-                <FaPen onClick={() => setShowForm(true)} />
-                {/* <Fab color="secondary" size="small" aria-label="delete" onClick={() => props.handleDeleteUser}>
-                    <Delete />
-                </Fab> */}
-                {showForm ? <UserForm mode='edit' show={showForm} data={props.user} onClose={handleClose} /> : null}
+                <Tooltip title="Delete">
+                    <IconButton
+                        aria-label="delete"
+                        onClick={props.handleDeleteUser}>
+                        <DeleteIcon />
+                    </IconButton>
+                </Tooltip>
+                <Tooltip title="Edit">
+                    <IconButton
+                        aria-label="Edit"
+                        onClick={() => setShowForm(true)} >
+                        < EditIcon />
+                    </IconButton>
+                </Tooltip>
+                {showForm ?
+                    <UserForm
+                        mode='edit'
+                        show={showForm}
+                        data={props.user}
+                        onClose={handleClose}
+                    /> : null}
             </div>
         </div>
     )

@@ -1,5 +1,4 @@
 import * as actions from '../actions/actions'
-// import { updatedObject } from '../../shared/utility'
 
 const updatedObject = (oldObj, updatedProps) => {
     return {
@@ -7,9 +6,11 @@ const updatedObject = (oldObj, updatedProps) => {
         ...updatedProps
     }
 }
+
 const intialState = {
     users: [],
-    loading: false,
+    loading: true,
+    message: ''
 }
 
 const fetchUsersStart = (state) => {
@@ -18,7 +19,7 @@ const fetchUsersStart = (state) => {
 const fetchUserSucess = (state, action) => {
     return updatedObject(state, {
         users: action.users,
-        loading: false
+        loading: false,
     })
 }
 const fetchUserFail = (state) => {
@@ -27,23 +28,34 @@ const fetchUserFail = (state) => {
 const deleteUserSuccess = (state, action) => {
     const newList = state.users.filter(user =>
         user.customerID !== action.id)
-    return updatedObject(state, { users: newList })
+    return updatedObject(state, {
+        users: newList,
+        message: 'User deleted successfully'
+    })
 }
 const updateUserSuccess = (state, action) => {
     console.log('update user', action.user)
     const updatedUsers = state.users.map(obj =>
         obj.customerID === action.user.customerID ? { ...action.user } : obj
     );
-    return updatedObject(state, { users: updatedUsers, loading: false })
+    return updatedObject(state,
+        {
+            users: updatedUsers,
+            loading: false,
+            message: 'User updated successfully'
+        })
 }
 const addUserSuccess = (state, action) => {
+    console.log('user in reducer', action);
     const user = { ...action.user, 'customerID': state.users.length + 1 }
     const newList = state.users.concat(user)
-    return updatedObject(state, { usera: newList, loading: false })
+    console.log('new users lIst in reducer', newList)
+    return updatedObject(state, {
+        users: newList,
+        loading: false, message:
+            'User added successfully'
+    })
 }
-
-
-
 
 const userReducer = (state = intialState, action) => {
     switch (action.type) {

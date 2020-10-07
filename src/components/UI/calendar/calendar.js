@@ -3,13 +3,15 @@ import React from 'react'
 import 'react-datetime/css/react-datetime.css'
 import Datetime from 'react-datetime'
 
-const Calendar = (props) => {
 
+const Calendar = (props) => {
     return <Datetime
-        closeOnSelect={true}
-        value={props.date}
+        initialValue={props.date}
         inputProps={{ placeholder: props.placeholder }}
         timeFormat={props.timeFormat}
-        onChange={props.change} />;
+        onChange={props.change}
+        closeOnTab={true}
+    />
+
 }
 export default Calendar;

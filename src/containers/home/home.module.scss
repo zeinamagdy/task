@@ -19,8 +19,8 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    &__add:focus {
-        outline: none;
+    &__add :focus {
+        outline: 0;
     }
 }
 .main {

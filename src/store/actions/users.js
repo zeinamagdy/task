@@ -21,7 +21,7 @@ export const fetchUsersFail = (error) => {
 export const addUserSuccess = (data) => {
     return {
         type: actions.ADD_USER_SUCCESS,
-        USERS: data,
+        user: data,
     }
 }
 export const updateUserScuccess = (user) => {
@@ -46,6 +46,7 @@ export const fetchUsers = () => {
     }
 }
 export const addUser = (user) => {
+    console.log('user in actions', user);
     return dispatch => {
         createUser(user)
             .then(response => {

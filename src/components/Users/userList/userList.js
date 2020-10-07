@@ -1,62 +1,56 @@
-import React, { useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { fetchUsers, deleteUser } from '../../../store/actions'
 import User from '../user/user'
 import Snackbar from '../../UI/snackbar/snackbar'
+import Spinnner from '../../UI/spinner/spinner'
 import UserForm from '../userForm/userForm'
 import Pagination from '@material-ui/lab/Pagination'
 import * as classes from './userList.module.scss'
 
 const UserList = (props) => {
     const { getUsers } = props
-    const [message, setMessage] = useState({})
     const [showForm, setShowForm] = useState(false)
     const [page, setPage] = useState(1);
     const rowsPerPage = 5;
+    const startIdx = (page - 1) * rowsPerPage
+    const endIdx = startIdx + rowsPerPage
 
     useEffect(() => {
         getUsers()
     }, [getUsers])
 
     // console.log("calling api", props.users)
-    const handleCloseSnackbar = () => {
-        setMessage({})
-    }
     const handleClose = () => {
         setShowForm(false)
     }
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
-
-    const startIdx = (page - 1) * rowsPerPage;
-    const endIdx = startIdx + rowsPerPage;
+    console.log('users', props.users)
+    let users = props.users.length > 0 ?
+        <div className={classes.userList}>
+            {props.users.slice(startIdx, endIdx).map((user, index) =>
+                <User
+                    key={index}
+                    handleDeleteUser={(id) => props.deleteUser(user.customerID)}
+                    user={user}
+                />)}
+            <Pagination
+                count={Math.ceil(props.users.length / rowsPerPage)}
+                page={page}
+                onChange={handleChangePage}
+                variant="outlined"
+                color="primary"
+            />
+        </div> : <div>No users</div>
 
     return (
-        <>
-            <div className={classes.userList}>
-                {props.loading ? <div>Loaading</div> :
-                    props.users.slice(startIdx, endIdx).map((user, index) =>
-                        <User
-                            key={index}
-                            handleDeleteUser={(id) => props.deleteUser(user.customerID)}
-                            user={user}
-                        />)}
-                <Pagination
-                    count={Math.ceil(props.users.length / rowsPerPage)}
-                    page={page}
-                    onChange={handleChangePage}
-                    variant="outlined"
-                    color="primary"
-                />
-            </div>
-
-            {Object.keys(message).length !== 0 ?
-                <Snackbar message={message} onClosed={handleCloseSnackbar} /> : null}
+        <Fragment>
+            {props.loading ? <Spinnner /> : users}
+            {props.message !== '' ? <Snackbar message={props.message} /> : null}
             {showForm ? <UserForm mode='add' onClose={handleClose} show={showForm} /> : null}
-
-        </>
-
+        </Fragment>
     )
 }
 const dispatchToProps = dispatch => {
@@ -68,7 +62,8 @@ const dispatchToProps = dispatch => {
 const stateToProps = state => {
     return {
         users: state.users,
-        loading: state.loading
+        loading: state.loading,
+        message: state.message
     }
 }
 
